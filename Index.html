@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quadranten</title>
+
+<style>
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #808080;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#feld {
+    width: 90vmin;
+    height: 90vmin;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    border: 4px solid black;
+}
+
+.quadrat {
+    border: 2px solid black;
+}
+</style>
+</head>
+
+<body>
+
+<div id="feld">
+    <div class="quadrat"></div>
+    <div class="quadrat"></div>
+    <div class="quadrat"></div>
+    <div class="quadrat"></div>
+</div>
+
+<script>
+let zustand = [0,0,0,0];
+
+function anzeigen() {
+    const felder = document.querySelectorAll(".quadrat");
+
+    for (let i = 0; i < 4; i++) {
+        felder[i].style.backgroundColor =
+            zustand[i] ? "black" : "white";
+    }
+}
+
+function neuerZustand() {
+    let neu;
+    let aenderungen;
+
+    do {
+        neu = [];
+
+        for (let i = 0; i < 4; i++) {
+            neu.push(Math.random() < 0.5 ? 1 : 0);
+        }
+
+        aenderungen = 0;
+
+        for (let i = 0; i < 4; i++) {
+            if (neu[i] !== zustand[i]) {
+                aenderungen++;
+            }
+        }
+
+    } while (aenderungen < 2);
+
+    zustand = neu;
+    anzeigen();
+}
+
+for (let i = 0; i < 4; i++) {
+    zustand[i] = Math.random() < 0.5 ? 1 : 0;
+}
+
+anzeigen();
+
+setInterval(neuerZustand, 5000);
+</script>
+
+</body>
+</html>
